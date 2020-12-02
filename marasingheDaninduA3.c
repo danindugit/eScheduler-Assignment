@@ -19,10 +19,13 @@ by me specifically for this course.
 
 int main (int argc, char* argv[]){
     int i;
-    char filename[50];
+    int j;
+    char filename1[50];
+    char filename2[50];
     char courseNames[NUMBER_COURSES][50];
     char profNames [NUMBER_PROFS][30];
     int courseID [NUMBER_COURSES];
+    char data[NUMBER_PROFS][NUMBER_COURSES];
 
     if(argc != 3){
         //if incorrect number of command line args
@@ -31,19 +34,32 @@ int main (int argc, char* argv[]){
     }
 
     //get filename from 2nd command line arg and call rad CourseProfData with it 
-    strcpy(filename, argv[1]);
-    readCourseProfData(filename, courseNames, profNames, courseID);
+    strcpy(filename1, argv[1]);
+    readCourseProfData(filename1, courseNames, profNames, courseID);
 
-    //test readCourseProfData
-    for (i = 0; i < NUMBER_COURSES; i++)
-    {
-        printf("%d: %s\n", courseID[i], courseNames[i]);
-    }
-    for (i = 0; i < NUMBER_PROFS; i++)
-    {
-        printf("%s\n", profNames[i]);
-    }
+    strcpy(filename2, argv[2]);
+    readData(filename2, data);
+
+    // //test readCourseProfData
+    // for (i = 0; i < NUMBER_COURSES; i++)
+    // {
+    //     printf("%d: %s\n", courseID[i], courseNames[i]);
+    // }
+    // for (i = 0; i < NUMBER_PROFS; i++)
+    // {
+    //     printf("%s\n", profNames[i]);
+    // }
     
+    // //test readData
+    // for (i = 0; i < NUMBER_PROFS; i++)
+    // {
+    //     printf("{");
+    //     for (j = 0; j < NUMBER_COURSES; j++)
+    //     {
+    //         printf("%c, ", data[i][j]);
+    //     }
+    //     printf("}\n");
+    // }
     
 
     return 0;
@@ -85,4 +101,28 @@ void readCourseProfData(char filename [50], char courseNames[NUMBER_COURSES][50]
     }   
 
     fclose(inFile); 
+}
+
+void readData(char filename[50], char data[NUMBER_PROFS][NUMBER_COURSES]){
+    int i;
+    int j;
+    char strin[NUMBER_PROFS][NUMBER_COURSES];
+
+    FILE* inFile = NULL;
+
+    inFile = fopen(filename, "r");
+    if(inFile == NULL){
+        printf("Could not open file %s\n", filename);
+    }
+
+    for (i = 0; i < NUMBER_PROFS; i++)
+    {
+        fscanf(inFile, "%s", strin[i]);
+        for (j = 0; j < NUMBER_COURSES; j++)
+        {
+            data[i][j] = strin[i][j];
+        }        
+    }
+
+    fclose(inFile);
 }
