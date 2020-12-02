@@ -20,6 +20,7 @@ by me specifically for this course.
 int main (int argc, char* argv[]){
     int i;
     int j;
+    int numPTeachingNC;
     char filename1[50];
     char filename2[50];
     char courseNames[NUMBER_COURSES][50];
@@ -39,6 +40,8 @@ int main (int argc, char* argv[]){
 
     strcpy(filename2, argv[2]);
     readData(filename2, data);
+
+    numPTeachingNC = numProfsTeachingNCourses(data, 3, profNames);
 
     // //test readCourseProfData
     // for (i = 0; i < NUMBER_COURSES; i++)
@@ -60,7 +63,9 @@ int main (int argc, char* argv[]){
     //     }
     //     printf("}\n");
     // }
-    
+
+    // //test numProfsTeachingNCourses
+    // printf("%d", numPTeachingNC);    
 
     return 0;
 }
@@ -125,4 +130,35 @@ void readData(char filename[50], char data[NUMBER_PROFS][NUMBER_COURSES]){
     }
 
     fclose(inFile);
+}
+
+int numProfsTeachingNCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, char profNames[NUMBER_PROFS][30]){
+    int i;
+    int j;
+    int counterProfs, counterCourses;
+    char strProfs [100];
+
+    strcpy(strProfs, "");
+    counterProfs = 0;
+
+    for (i = 0; i < NUMBER_PROFS; i++)
+    {
+        counterCourses = 0;
+        for (j = 0; j < NUMBER_COURSES; j++)
+        {
+            if(data[i][j] == 'y'){
+                counterCourses++;
+            }
+        }
+        if(counterCourses >= n){
+            counterProfs++;
+            strcat(strProfs, profNames[i]);
+            strcat(strProfs, ", ");
+        }        
+    }
+    //remove final comma from strProfs
+    strProfs[strlen(strProfs) - 2] = '\0'; 
+    printf("%s\n", strProfs);  
+
+    return counterProfs;
 }
