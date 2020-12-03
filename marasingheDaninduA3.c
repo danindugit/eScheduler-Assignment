@@ -21,6 +21,7 @@ int main (int argc, char* argv[]){
     int i;
     int j;
     int numPTeachingNC;
+    int numPTeachingNLevelC;
     char filename1[50];
     char filename2[50];
     char courseNames[NUMBER_COURSES][50];
@@ -40,8 +41,6 @@ int main (int argc, char* argv[]){
 
     strcpy(filename2, argv[2]);
     readData(filename2, data);
-
-    numPTeachingNC = numProfsTeachingNCourses(data, 3, profNames);
 
     // //test readCourseProfData
     // for (i = 0; i < NUMBER_COURSES; i++)
@@ -65,7 +64,12 @@ int main (int argc, char* argv[]){
     // }
 
     // //test numProfsTeachingNCourses
-    // printf("%d", numPTeachingNC);    
+    // printf("%d", numPTeachingNC);  
+    // numPTeachingNC = numProfsTeachingNCourses(data, 3, profNames); 
+
+    //test numProfsTeachingNLevelCourses
+    numPTeachingNLevelC = numProfsTeachingNLevelCourses(data, 100, courseID, profNames);
+    printf("%d profs teaching n level courses\n", numPTeachingNLevelC);
 
     return 0;
 }
@@ -161,4 +165,52 @@ int numProfsTeachingNCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, cha
     printf("%s\n", strProfs);  
 
     return counterProfs;
+}
+
+int numProfsTeachingNLevelCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, int courseID[NUMBER_COURSES], char profNames[NUMBER_PROFS][30]){
+    int counter;
+    int i;
+    int j;
+    char strProfs [100];
+    int isTeaching[NUMBER_PROFS];
+    int isTeachingAny[NUMBER_PROFS];
+
+    strcpy(strProfs, "");
+    counter = 0;
+
+    for (i = 0; i < NUMBER_PROFS; i++)
+    {
+        for (j = 0; j < NUMBER_COURSES; j++)
+        {
+            if(data[i][j] == 'y')
+            {
+                if(courseID[j] / 1000 != (n/100)){
+                    isTeaching[i] = 0;
+                    break;
+                }
+            }
+            isTeaching[i] = 1;
+        }    
+        //loop again to check if the prof is teaching no courses
+        for (j = 0; j < NUMBER_COURSES; j++)
+        {
+            if(data[i][j] == 'y'){
+                isTeachingAny[i] = 1;
+                break;
+            }
+            isTeachingAny[i] = 0;
+        }
+        
+        if(isTeaching[i] == 1 && isTeachingAny[i] == 1){
+            counter++;
+            strcat(strProfs, profNames[i]);
+            strcat(strProfs, ", ");
+        }    
+    }
+
+    //remove final comma from strProfs
+    strProfs[strlen(strProfs) - 2] = '\0'; 
+    printf("%s\n", strProfs);  
+    
+    return counter;
 }
