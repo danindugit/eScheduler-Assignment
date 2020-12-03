@@ -123,7 +123,8 @@ int main(int argc, char* argv[]){
         }
     }
     else if(option == 9){
-
+        printf("TASK 9:\n");
+        generateReport(data, courseID, courseNames, profNames);
     }
     else{
         break;
