@@ -76,6 +76,9 @@ int main (int argc, char* argv[]){
     // cWithNP = coursesWithNProfs(data, 3, courseNames);
     // printf("%d courses with n profs\n", cWithNP);
 
+    //test avgNumCourses
+    printf("%.2f", avgNumCourses(data));
+
     return 0;
 }
 
@@ -255,4 +258,27 @@ int coursesWithNProfs(char data[NUMBER_PROFS][NUMBER_COURSES], int n, char cours
     printf("%s\n", strCourses);   
     
     return numCourses;
+}
+
+float avgNumCourses(char data[NUMBER_PROFS][NUMBER_COURSES]){
+    int i;
+    int j;
+    int numY;
+    float avg;
+
+    numY = 0;
+
+    for (i = 0; i < NUMBER_PROFS; i++)
+    {
+        for (j = 0; j < NUMBER_COURSES; j++)
+        {
+            if(data[i][j] == 'y'){
+                numY++;
+            }
+        }        
+    }
+
+    avg = (float)numY/NUMBER_PROFS;
+    
+    return avg;    
 }
