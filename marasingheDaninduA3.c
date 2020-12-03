@@ -26,7 +26,7 @@ by me specifically for this course.
 void readCourseProfData(char filename [50], char courseNames[NUMBER_COURSES][50], char profNames[NUMBER_PROFS][30], int courseID[NUMBER_COURSES]) {
     int i;
     FILE* inFile = NULL;
-
+    //open file in read mode
     inFile = fopen(filename, "r");
     if(inFile == NULL){
         printf("Could not open file %s\n", filename);
@@ -70,10 +70,10 @@ void readCourseProfData(char filename [50], char courseNames[NUMBER_COURSES][50]
 void readData(char filename[50], char data[NUMBER_PROFS][NUMBER_COURSES]){
     int i;
     int j;
-    char strin[NUMBER_PROFS][NUMBER_COURSES];
+    char strin[NUMBER_PROFS][NUMBER_COURSES];  //string variable array for input from data file
 
     FILE* inFile = NULL;
-
+    //open file in read mode
     inFile = fopen(filename, "r");
     if(inFile == NULL){
         printf("Could not open file %s\n", filename);
@@ -81,9 +81,11 @@ void readData(char filename[50], char data[NUMBER_PROFS][NUMBER_COURSES]){
 
     for (i = 0; i < NUMBER_PROFS; i++)
     {
+        //loop through each line of the file add each line to strin
         fscanf(inFile, "%s", strin[i]);
         for (j = 0; j < NUMBER_COURSES; j++)
         {
+            //loop through each element of strin and assign it to each element of data
             data[i][j] = tolower(strin[i][j]);
         }        
     }
@@ -98,7 +100,8 @@ void readData(char filename[50], char data[NUMBER_PROFS][NUMBER_COURSES]){
 int numProfsTeachingNCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, char profNames[NUMBER_PROFS][30]){
     int i;
     int j;
-    int counterProfs, counterCourses;
+    int counterProfs, counterCourses;//variables to count profs and courses
+    //initialize
     counterProfs = 0;
 
     for (i = 0; i < NUMBER_PROFS; i++)
@@ -106,16 +109,20 @@ int numProfsTeachingNCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, cha
         counterCourses = 0;
         for (j = 0; j < NUMBER_COURSES; j++)
         {
+            //loop through each course and check if this prof is teaching it
             if(data[i][j] == 'y'){
+                //if this prof is teaching it, add 1 to the course counter
                 counterCourses++;
             }
         }
         if(counterCourses >= n){
+            //if the number of courses that the prof is teaching is greater than equal to n, add one to the profs counter
             counterProfs++;
+            //and print the profs name
             printf("Professor %s teaches %d or more courses a year\n", profNames[i], n);
         }        
     }
-    
+    //print number of profs
     printf("\nNumber of profs teaching more than n courses = %d\n", counterProfs);
 
     return counterProfs;
@@ -128,43 +135,50 @@ int numProfsTeachingNCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, cha
  Post: Prints professors that teach n-level courses and number of those profs
 *******/
 int numProfsTeachingNLevelCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, int courseID[NUMBER_COURSES], char profNames[NUMBER_PROFS][30]){
-    int counter;
+    int counter;  //counter for number of profs teaching only n level courses
     int i;
     int j;
-    int isTeaching[NUMBER_PROFS];
-    int isTeachingAny[NUMBER_PROFS];
-
+    int isTeaching[NUMBER_PROFS];  //boolean int for whether the prof is teaching an n level course or not
+    int isTeachingAny[NUMBER_PROFS];  //boolean int for whether the prof is teaching any course
+    //initialize
     counter = 0;
 
     for (i = 0; i < NUMBER_PROFS; i++)
     {
         for (j = 0; j < NUMBER_COURSES; j++)
         {
+            //loop through each data element to see if this prof is teaching this course
             if(data[i][j] == 'y')
             {
                 if(courseID[j] / 1000 != n){
+                    //if this prof is teaching a course thats not n level, set isTeaching for the prof to false and break out of j loop
                     isTeaching[i] = 0;
                     break;
                 }
             }
+            //if it makes it here without breaking, the prof is either teaching only n livel courses or no courses at all so set isTeaching[i] to true
             isTeaching[i] = 1;
         }    
         //loop again to check if the prof is teaching no courses
         for (j = 0; j < NUMBER_COURSES; j++)
         {
             if(data[i][j] == 'y'){
+                //if this prof is teaching a course, break out the for loop and set isTeachingAny to true
                 isTeachingAny[i] = 1;
                 break;
             }
+            //if it makes it here without breaking, the prof is teaching no courses
             isTeachingAny[i] = 0;
         }
         
         if(isTeaching[i] == 1 && isTeachingAny[i] == 1){
+            //count how many profs that are teaching courses teach only n level courses
             counter++;
+            //print this profs name
             printf("Professor %s teaches only %d000 level courses\n", profNames[i], n);
         }    
     }
-
+    //print number of profs
     printf("Number of profs teaching n-level courses = %d\n", counter);
 
     return counter;
@@ -179,17 +193,20 @@ int numProfsTeachingNLevelCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n
 int coursesWithNProfs(char data[NUMBER_PROFS][NUMBER_COURSES], int n, char courseNames[NUMBER_COURSES][50]){
     int i;
     int j;
-    int numProfs[NUMBER_COURSES];
-    int numCourses;
-
+    int numProfs[NUMBER_COURSES];  //counter for number of profs per course
+    int numCourses;  //counter for courses
+    //initialize
     numCourses = 0;
 
     for (i = 0; i < NUMBER_COURSES; i++)
     {
+        //set numProfs to 0 when looping through a new prof
         numProfs[i] = 0;
         for (j = 0; j < NUMBER_PROFS; j++)
         {
+            //loop through each prof per course
             if(data[j][i] == 'y'){
+                //if this prof is teaching this course, add one to the number of profs for this course
                 numProfs[i]++;
             }
         }
@@ -197,12 +214,15 @@ int coursesWithNProfs(char data[NUMBER_PROFS][NUMBER_COURSES], int n, char cours
 
     for (i = 0; i < NUMBER_COURSES; i++)
     {
+        //loop through each course
         if(numProfs[i] == n){
+            //if this course has n profs, add one to the course counter
             numCourses++;
+            //print name of course and number of profs for it
             printf("%s is taught by %d profs\n", courseNames[i], n);
         }
     }
-
+    //print number of courses taught by n professors
     printf("Number of courses taught by n professors = %d\n", numCourses);
     
     return numCourses;
@@ -216,11 +236,11 @@ int coursesWithNProfs(char data[NUMBER_PROFS][NUMBER_COURSES], int n, char cours
 float avgNumCourses(char data[NUMBER_PROFS][NUMBER_COURSES]){
     int i;
     int j;
-    int numY;
-    float avg;
+    int numY;  //counter for number of y's in data
+    float avg;  //variable for average courses per prof
 
     numY = 0;
-
+    //loop through data to count y's
     for (i = 0; i < NUMBER_PROFS; i++)
     {
         for (j = 0; j < NUMBER_COURSES; j++)
@@ -230,7 +250,7 @@ float avgNumCourses(char data[NUMBER_PROFS][NUMBER_COURSES]){
             }
         }        
     }
-
+    //calculate average
     avg = (float)numY/NUMBER_PROFS;
     
     return avg;    
