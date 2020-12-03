@@ -122,8 +122,6 @@ int numProfsTeachingNCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, cha
             printf("Professor %s teaches %d or more courses a year\n", profNames[i], n);
         }        
     }
-    //print number of profs
-    printf("\nNumber of profs teaching more than n courses = %d\n", counterProfs);
 
     return counterProfs;
 }
@@ -178,8 +176,6 @@ int numProfsTeachingNLevelCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n
             printf("Professor %s teaches only %d000 level courses\n", profNames[i], n);
         }    
     }
-    //print number of profs
-    printf("Number of profs teaching n-level courses = %d\n", counter);
 
     return counter;
 }
@@ -222,8 +218,6 @@ int coursesWithNProfs(char data[NUMBER_PROFS][NUMBER_COURSES], int n, char cours
             printf("%s is taught by %d profs\n", courseNames[i], n);
         }
     }
-    //print number of courses taught by n professors
-    printf("Number of courses taught by n professors = %d\n", numCourses);
     
     return numCourses;
 }
@@ -306,7 +300,6 @@ void generateReport(char data[NUMBER_PROFS][NUMBER_COURSES],int courseID[NUMBER_
     int i;
     int j;
     int numProfs[NUMBER_COURSES];
-    char names[NUMBER_PROFS*10][30];
     int profCounter; //variable to count how many profs have been printed so far for the current course on loop
 
     //loop to get the the number of profs teaching each course

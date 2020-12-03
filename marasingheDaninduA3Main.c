@@ -18,7 +18,6 @@ by me specifically for this course.
 #include "givenA3.h"
 
 int main(int argc, char* argv[]){
-    int i;
     char filename1[50];  //name for courses.txt
     char filename2[50];  //name for data.txt
     //arrays for course names, prof names, course ID's, and a 2D list for all data
@@ -85,6 +84,8 @@ int main(int argc, char* argv[]){
         scanf("%d", &numCoursesTask3);
             
         numPTeachingNC = numProfsTeachingNCourses(data, numCoursesTask3, profNames);
+        //print number of profs
+        printf("\nNumber of profs teaching more than n courses = %d\n", numPTeachingNC);
     }
     else if(option == 4){
         printf("TASK 4:\n");
@@ -93,6 +94,8 @@ int main(int argc, char* argv[]){
         scanf("%d", &level);
 
         numPTeachingNLevelC = numProfsTeachingNLevelCourses(data, level, courseID, profNames);
+        //print number of profs
+        printf("Number of profs teaching n-level courses = %d\n", numPTeachingNLevelC);
     }
     else if(option == 5){
         printf("TASK 5:\n");
@@ -101,6 +104,7 @@ int main(int argc, char* argv[]){
         scanf("%d", &numProfsForCourse);
 
         cWithNP = coursesWithNProfs(data, numProfsForCourse, courseNames);
+        printf("Number of courses taught by n professors = %d\n", cWithNP);
     }
     else if(option == 6){
         printf("TASK 6:\n");
