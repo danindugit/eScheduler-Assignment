@@ -19,7 +19,6 @@ by me specifically for this course.
 
 int main(int argc, char* argv[]){
     int i;
-    int j;
     char filename1[50];  //name for courses.txt
     char filename2[50];  //name for data.txt
     //arrays for course names, prof names, course ID's, and a 2D list for all data
