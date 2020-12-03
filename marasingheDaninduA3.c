@@ -29,6 +29,7 @@ int main (int argc, char* argv[]){
     char profNames [NUMBER_PROFS][30];
     int courseID [NUMBER_COURSES];
     char data[NUMBER_PROFS][NUMBER_COURSES];
+    char cNameFound[50];
 
     if(argc != 3){
         //if incorrect number of command line args
@@ -76,8 +77,17 @@ int main (int argc, char* argv[]){
     // cWithNP = coursesWithNProfs(data, 3, courseNames);
     // printf("%d courses with n profs\n", cWithNP);
 
-    //test avgNumCourses
-    printf("%.2f", avgNumCourses(data));
+    // //test avgNumCourses
+    // printf("%.2f", avgNumCourses(data));
+
+    //test getCourseName
+    printf("%d\n", getCourseName(1300, courseID, cNameFound, courseNames));
+    if(getCourseName(1300, courseID, cNameFound, courseNames) == 0){
+        printf("course not found\n");
+    }
+    else{
+        printf("%s\n", cNameFound);
+    }
 
     return 0;
 }
@@ -281,4 +291,19 @@ float avgNumCourses(char data[NUMBER_PROFS][NUMBER_COURSES]){
     avg = (float)numY/NUMBER_PROFS;
     
     return avg;    
+}
+
+int getCourseName (int courseNum, int courseID[NUMBER_COURSES], char cNameFound [50], char courseNames[NUMBER_COURSES][50]){
+    int i;
+
+    for (i = 0; i < NUMBER_COURSES; i++)
+    {
+        if(courseID[i] == courseNum){
+            //course found
+            strcpy(cNameFound, courseNames[i]);
+            return 1;
+        }
+    }
+    //course not found
+    return 0;
 }
