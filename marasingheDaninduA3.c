@@ -30,6 +30,7 @@ int main (int argc, char* argv[]){
     int courseID [NUMBER_COURSES];
     char data[NUMBER_PROFS][NUMBER_COURSES];
     char cNameFound[50];
+    int cNumFound;
 
     if(argc != 3){
         //if incorrect number of command line args
@@ -80,13 +81,23 @@ int main (int argc, char* argv[]){
     // //test avgNumCourses
     // printf("%.2f", avgNumCourses(data));
 
-    //test getCourseName
-    printf("%d\n", getCourseName(1300, courseID, cNameFound, courseNames));
-    if(getCourseName(1300, courseID, cNameFound, courseNames) == 0){
+    // //test getCourseName
+    // printf("%d\n", getCourseName(1300, courseID, cNameFound, courseNames));
+    // if(getCourseName(1300, courseID, cNameFound, courseNames) == 0){
+    //     printf("course not found\n");
+    // }
+    // else{
+    //     printf("%s\n", cNameFound);
+    // }
+
+    //test getCourseNum
+    int found = getCourseNum("Advanced OO", courseID, &cNumFound, courseNames);
+    printf("%d\n", found);
+    if(found == 0){
         printf("course not found\n");
     }
     else{
-        printf("%s\n", cNameFound);
+        printf("%d\n", cNumFound);
     }
 
     return 0;
@@ -147,7 +158,7 @@ void readData(char filename[50], char data[NUMBER_PROFS][NUMBER_COURSES]){
         fscanf(inFile, "%s", strin[i]);
         for (j = 0; j < NUMBER_COURSES; j++)
         {
-            data[i][j] = strin[i][j];
+            data[i][j] = tolower(strin[i][j]);
         }        
     }
 
@@ -301,6 +312,21 @@ int getCourseName (int courseNum, int courseID[NUMBER_COURSES], char cNameFound 
         if(courseID[i] == courseNum){
             //course found
             strcpy(cNameFound, courseNames[i]);
+            return 1;
+        }
+    }
+    //course not found
+    return 0;
+}
+
+int getCourseNum (char cName [50], int courseID[NUMBER_COURSES], int * cNumFound, char courseNames[NUMBER_COURSES][50]){
+    int i;
+
+    for (i = 0; i < NUMBER_COURSES; i++)
+    {
+        if(strcmp(courseNames[i], cName) == 0){
+            //course found
+            *cNumFound = courseID[i];
             return 1;
         }
     }
