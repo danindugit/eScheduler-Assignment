@@ -22,6 +22,7 @@ int main (int argc, char* argv[]){
     int j;
     int numPTeachingNC;
     int numPTeachingNLevelC;
+    int cWithNP;
     char filename1[50];
     char filename2[50];
     char courseNames[NUMBER_COURSES][50];
@@ -67,9 +68,13 @@ int main (int argc, char* argv[]){
     // printf("%d", numPTeachingNC);  
     // numPTeachingNC = numProfsTeachingNCourses(data, 3, profNames); 
 
-    //test numProfsTeachingNLevelCourses
-    numPTeachingNLevelC = numProfsTeachingNLevelCourses(data, 100, courseID, profNames);
-    printf("%d profs teaching n level courses\n", numPTeachingNLevelC);
+    // //test numProfsTeachingNLevelCourses
+    // numPTeachingNLevelC = numProfsTeachingNLevelCourses(data, 100, courseID, profNames);
+    // printf("%d profs teaching n level courses\n", numPTeachingNLevelC);
+
+    // //test coursesWithNProfs
+    // cWithNP = coursesWithNProfs(data, 3, courseNames);
+    // printf("%d courses with n profs\n", cWithNP);
 
     return 0;
 }
@@ -213,4 +218,41 @@ int numProfsTeachingNLevelCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n
     printf("%s\n", strProfs);  
     
     return counter;
+}
+
+int coursesWithNProfs(char data[NUMBER_PROFS][NUMBER_COURSES], int n, char courseNames[NUMBER_COURSES][50]){
+    int i;
+    int j;
+    int numProfs[NUMBER_COURSES];
+    char strCourses[100];
+    int numCourses;
+
+    numCourses = 0;
+    strcpy(strCourses, "");
+
+    for (i = 0; i < NUMBER_COURSES; i++)
+    {
+        numProfs[i] = 0;
+        for (j = 0; j < NUMBER_PROFS; j++)
+        {
+            if(data[j][i] == 'y'){
+                numProfs[i]++;
+            }
+        }
+    }
+
+    for (i = 0; i < NUMBER_COURSES; i++)
+    {
+        if(numProfs[i] == n){
+            numCourses++;
+            strcat(strCourses, courseNames[i]);
+            strcat(strCourses, ", ");
+        }
+    }
+
+    //remove final comma from strCourses
+    strCourses[strlen(strCourses) - 2] = '\0'; 
+    printf("%s\n", strCourses);   
+    
+    return numCourses;
 }
