@@ -183,7 +183,7 @@ int numProfsTeachingNCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, cha
         }
         if(counterCourses >= n){
             counterProfs++;
-            printf("Professor %s teaches %d or more courses a year\n", profNames[i]);
+            printf("Professor %s teaches %d or more courses a year\n", profNames[i], n);
         }        
     }
     
