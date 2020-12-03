@@ -323,9 +323,9 @@ int getCourseNum (char cName [50], int courseID[NUMBER_COURSES], int * cNumFound
 void generateReport(char data[NUMBER_PROFS][NUMBER_COURSES],int courseID[NUMBER_COURSES],char courseNames[NUMBER_COURSES][50],char profNames[NUMBER_PROFS][30]){
     int i;
     int j;
-    int k;
     int numProfs[NUMBER_COURSES];
     char names[NUMBER_PROFS*10][30];
+    int profCounter; //variable to count how many profs have been printed so far for the current course on loop
 
     //loop to get the the number of profs teaching each course
     for (i = 0; i < NUMBER_COURSES; i++)
@@ -346,5 +346,33 @@ void generateReport(char data[NUMBER_PROFS][NUMBER_COURSES],int courseID[NUMBER_
     {
         printf("%d.\tCourse No: CIS%d\n", i+1, courseID[i]);
         printf("\tCourse Name: %s\n", courseNames[i]);
+        printf("\n\tTaught by: ");
+        if(numProfs[i] == 0){
+            //if there are no profs for this course, print none
+            printf("None\n\n");
+            continue;
+        }
+        //initialize profCounter to 0
+        profCounter = 0;
+        //loop to print prof names teaching the course
+        for (j = 0; j < NUMBER_PROFS; j++)
+        {
+            //otherwise, check if this prof teach the ith course and add commas and ands based on numProfs[i]
+            if(data[j][i] == 'y'){
+                //if this prof is teaching the course, print their name
+                printf("%s", profNames[j]);
+                if(profCounter == (numProfs[i] - 2)){
+                //if this is the second last prof teaching the course, print and
+                printf(" and ");
+                }
+                else if(profCounter < (numProfs[i] - 1)){
+                //otherwise if this isnt the last prof teaching this course, print a comma 
+                printf(", ");
+                }
+                profCounter++;
+            }            
+        }
+        printf("\n\n");        
     }
+    printf("*************************\n");
 }
