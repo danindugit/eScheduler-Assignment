@@ -17,95 +17,12 @@ by me specifically for this course.
 
 #include "givenA3.h"
 
-// int main (int argc, char* argv[]){
-//     int i;
-//     int j;
-//     int numPTeachingNC;
-//     int numPTeachingNLevelC;
-//     int cWithNP;
-//     char filename1[50];
-//     char filename2[50];
-//     char courseNames[NUMBER_COURSES][50];
-//     char profNames [NUMBER_PROFS][30];
-//     int courseID [NUMBER_COURSES];
-//     char data[NUMBER_PROFS][NUMBER_COURSES];
-//     char cNameFound[50];
-//     int cNumFound;
-
-//     if(argc != 3){
-//         //if incorrect number of command line args
-//         printf("Usage: ./a.out courses.txt data.txt");
-//         return -1;
-//     }
-
-//     //get filename from 2nd command line arg and call rad CourseProfData with it 
-//     strcpy(filename1, argv[1]);
-//     readCourseProfData(filename1, courseNames, profNames, courseID);
-
-//     strcpy(filename2, argv[2]);
-//     readData(filename2, data);
-
-//     // //test readCourseProfData
-//     // for (i = 0; i < NUMBER_COURSES; i++)
-//     // {
-//     //     printf("%d: %s\n", courseID[i], courseNames[i]);
-//     // }
-//     // for (i = 0; i < NUMBER_PROFS; i++)
-//     // {
-//     //     printf("%s\n", profNames[i]);
-//     // }
-    
-//     // //test readData
-//     // for (i = 0; i < NUMBER_PROFS; i++)
-//     // {
-//     //     printf("{");
-//     //     for (j = 0; j < NUMBER_COURSES; j++)
-//     //     {
-//     //         printf("%c, ", data[i][j]);
-//     //     }
-//     //     printf("}\n");
-//     // }
-
-//     // //test numProfsTeachingNCourses
-//     // printf("%d", numPTeachingNC);  
-//     // numPTeachingNC = numProfsTeachingNCourses(data, 3, profNames); 
-
-//     // //test numProfsTeachingNLevelCourses
-//     // numPTeachingNLevelC = numProfsTeachingNLevelCourses(data, 100, courseID, profNames);
-//     // printf("%d profs teaching n level courses\n", numPTeachingNLevelC);
-
-//     // //test coursesWithNProfs
-//     // cWithNP = coursesWithNProfs(data, 3, courseNames);
-//     // printf("%d courses with n profs\n", cWithNP);
-
-//     // //test avgNumCourses
-//     // printf("%.2f", avgNumCourses(data));
-
-//     // //test getCourseName
-//     // printf("%d\n", getCourseName(1300, courseID, cNameFound, courseNames));
-//     // if(getCourseName(1300, courseID, cNameFound, courseNames) == 0){
-//     //     printf("course not found\n");
-//     // }
-//     // else{
-//     //     printf("%s\n", cNameFound);
-//     // }
-
-//     // //test getCourseNum
-//     // int found = getCourseNum("Advanced OO", courseID, &cNumFound, courseNames);
-//     // printf("%d\n", found);
-//     // if(found == 0){
-//     //     printf("course not found\n");
-//     // }
-//     // else{
-//     //     printf("%d\n", cNumFound);
-//     // }
-
-//     //test generateReport
-//     generateReport(data, courseID, courseNames, profNames);
-
-//     return 0;
-// }
-
+/******
+ readCourseProfData: reads data from courses.txt
+ In: variables for name of file, course names, prof names, and course ID's
+ Out: None
+ Post: Scans data from courses.txt and assigns corresponding values to arrays
+*******/
 void readCourseProfData(char filename [50], char courseNames[NUMBER_COURSES][50], char profNames[NUMBER_PROFS][30], int courseID[NUMBER_COURSES]) {
     int i;
     FILE* inFile = NULL;
@@ -144,6 +61,12 @@ void readCourseProfData(char filename [50], char courseNames[NUMBER_COURSES][50]
     fclose(inFile); 
 }
 
+/******
+ readData: reads data from data.txt
+ In: variables for name of file, data 2d array
+ Out: None
+ Post: Scans data from data.txt and assigns corresponding values to indices of data array
+*******/
 void readData(char filename[50], char data[NUMBER_PROFS][NUMBER_COURSES]){
     int i;
     int j;
@@ -166,6 +89,12 @@ void readData(char filename[50], char data[NUMBER_PROFS][NUMBER_COURSES]){
     }
 }
 
+/******
+ numProfsTeachingNCourses: counts number of profs teaching n courses
+ In: variables for data 2d array, number of courses, prof names, 
+ Out: int for number of profs teaching n courses
+ Post: Prints professors that teach n courses and number of those profs
+*******/
 int numProfsTeachingNCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, char profNames[NUMBER_PROFS][30]){
     int i;
     int j;
@@ -192,6 +121,12 @@ int numProfsTeachingNCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, cha
     return counterProfs;
 }
 
+/******
+ numProfsTeachingNLevelCourses: counts number of profs teaching n-level courses only
+ In: variables for data 2d array, level of courses, course ids, prof names 
+ Out: int for number of profs teaching n-level courses
+ Post: Prints professors that teach n-level courses and number of those profs
+*******/
 int numProfsTeachingNLevelCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n, int courseID[NUMBER_COURSES], char profNames[NUMBER_PROFS][30]){
     int counter;
     int i;
@@ -235,6 +170,12 @@ int numProfsTeachingNLevelCourses(char data[NUMBER_PROFS][NUMBER_COURSES], int n
     return counter;
 }
 
+/******
+ coursesWithNProfs: counts courses with n profs
+ In: variables for data 2d array, n, course names 
+ Out: int for number of courses with n profs
+ Post: Prints courses that have n profs and number of those courses
+*******/
 int coursesWithNProfs(char data[NUMBER_PROFS][NUMBER_COURSES], int n, char courseNames[NUMBER_COURSES][50]){
     int i;
     int j;
@@ -267,6 +208,11 @@ int coursesWithNProfs(char data[NUMBER_PROFS][NUMBER_COURSES], int n, char cours
     return numCourses;
 }
 
+/******
+ avgNumCourses: calculates avg courses per prof
+ In: variables for data 2d array
+ Out: float average courses per prof
+*******/
 float avgNumCourses(char data[NUMBER_PROFS][NUMBER_COURSES]){
     int i;
     int j;
@@ -290,6 +236,11 @@ float avgNumCourses(char data[NUMBER_PROFS][NUMBER_COURSES]){
     return avg;    
 }
 
+/******
+ getCourseName: gets course name given id
+ In: variables for course id input, course ids, the name found, course names
+ Out: boolean int for whether the course is found or not
+*******/
 int getCourseName (int courseNum, int courseID[NUMBER_COURSES], char cNameFound [50], char courseNames[NUMBER_COURSES][50]){
     int i;
 
@@ -305,6 +256,11 @@ int getCourseName (int courseNum, int courseID[NUMBER_COURSES], char cNameFound 
     return 0;
 }
 
+/******
+ getCourseNum: gets course id given name
+ In: variables for course name input, course ids, the id found, course names
+ Out: boolean int for whether the course is found or not
+*******/
 int getCourseNum (char cName [50], int courseID[NUMBER_COURSES], int * cNumFound, char courseNames[NUMBER_COURSES][50]){
     int i;
 
@@ -320,6 +276,12 @@ int getCourseNum (char cName [50], int courseID[NUMBER_COURSES], int * cNumFound
     return 0;
 }
 
+/******
+ generateReport: generates report of all course data
+ In: variables for all necessary lists
+ Out: none
+ Post: prints report
+*******/
 void generateReport(char data[NUMBER_PROFS][NUMBER_COURSES],int courseID[NUMBER_COURSES],char courseNames[NUMBER_COURSES][50],char profNames[NUMBER_PROFS][30]){
     int i;
     int j;
