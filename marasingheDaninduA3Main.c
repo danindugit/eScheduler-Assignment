@@ -20,14 +20,15 @@ by me specifically for this course.
 int main(int argc, char* argv[]){
     int i;
     int j;
-    char filename1[50];
-    char filename2[50];
+    char filename1[50];  //name for courses.txt
+    char filename2[50];  //name for data.txt
+    //arrays for course names, prof names, course ID's, and a 2D list for all data
     char courseNames[NUMBER_COURSES][50];
     char profNames [NUMBER_PROFS][30];
     int courseID [NUMBER_COURSES];
     char data[NUMBER_PROFS][NUMBER_COURSES];
 
-    int option;
+    int option;  //user's menu option
     //variables for task 3
     int numPTeachingNC;
     int numCoursesTask3;
@@ -55,14 +56,15 @@ int main(int argc, char* argv[]){
         return -1;
     }
 
-    //get filename from 2nd command line arg and call rad CourseProfData with it 
+    //get filename from 2nd command line arg and call readCourseProfData with it 
     strcpy(filename1, argv[1]);
     readCourseProfData(filename1, courseNames, profNames, courseID);
-
+    //get filename from 3nd command line arg and call readData with it 
     strcpy(filename2, argv[2]);
     readData(filename2, data);
 
     do{
+    //loop through these commands until user enters an exit option
     printf("***************************\n");
     printf("Enter a choice from the menu displayed below:\n");
     printf("3 for Task 3 - count and print all profs teaching n courses\n");
@@ -73,12 +75,13 @@ int main(int argc, char* argv[]){
     printf("8 for Task 8 - search for course ID, given its name\n");
     printf("9 for Task 9 (additional functionality) - generate a report\n");
     printf("Enter 10 to exit\n");
-
+    //prompt for user menu option
     scanf("%d", &option);
     getchar();
 
     if(option == 3){
         printf("TASK 3:\n");
+        //prompt for number of courses
         printf("Number of courses?\n");
         scanf("%d", &numCoursesTask3);
             
@@ -86,6 +89,7 @@ int main(int argc, char* argv[]){
     }
     else if(option == 4){
         printf("TASK 4:\n");
+        //prompt for level of course
         printf("Level of Course?\n");
         scanf("%d", &level);
 
@@ -93,6 +97,7 @@ int main(int argc, char* argv[]){
     }
     else if(option == 5){
         printf("TASK 5:\n");
+        //prompt for number of profs for a course
         printf("Number of profs for a course?\n");
         scanf("%d", &numProfsForCourse);
 
@@ -100,10 +105,12 @@ int main(int argc, char* argv[]){
     }
     else if(option == 6){
         printf("TASK 6:\n");
+        //display average
         printf("Average number of courses taught by a prof = %.2f\n", avgNumCourses(data));
     }
     else if(option == 7){
         printf("TASK 7:\n");
+        //prompt for id
         printf("Search for which course id?\n");
         scanf("%d", &id);
 
@@ -120,6 +127,7 @@ int main(int argc, char* argv[]){
     }
     else if(option == 8){
         printf("TASK 8:\n");
+        //prompt for name of course
         printf("Search for which course name?\n");
         fgets(name, 30, stdin);
 
@@ -144,6 +152,7 @@ int main(int argc, char* argv[]){
         generateReport(data, courseID, courseNames, profNames);
     }
     else{
+        //exit option, exit out of program
         break;
     }
     } while(option > 2 && option < 10);
